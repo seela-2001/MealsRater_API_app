@@ -10,6 +10,21 @@ class Meal(models.Model):
     description = models.TextField(null=True, blank=True)
     photo = models.ImageField(upload_to='meals/photo/',null=True,blank=True)
 
+    def no_of_rating(self):
+        ratings = Rating.objects.filter(meal=self)
+        return len(ratings)
+    
+    def avg_rating(self):
+        ratings = Rating.objects.filter(meal=self)
+        sum_of_rating = 0
+        for i in ratings:
+            sum += i.stars
+        
+        if len(ratings) > 0:
+            return sum_of_rating / len(ratings)
+        else:
+            return 0
+
     def __str__(self):
         return self.title
     
